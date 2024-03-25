@@ -67,8 +67,9 @@ public class homePage {
         driver.findElement(text_selectProd(product)).click();
     }
 
-    public void selectCategories(String cat) {
+    public void selectCategories(String cat) throws InterruptedException {
         driver.findElement(text_categories(cat)).click();
+        Thread.sleep(5000);
     }
 
     public void validateSortByCategories() {
