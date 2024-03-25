@@ -45,7 +45,7 @@ public class homePage {
 
     public void getHomePage() throws InterruptedException {
         driver.get("https://www.demoblaze.com");
-        Thread.sleep(5);
+        Thread.sleep(5000);
     }
 
     public void clickNavbar(String menu) {
