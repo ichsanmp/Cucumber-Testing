@@ -27,7 +27,7 @@ public class selectProduct {
     }
 
     @When("click {string} for sorting the product")
-    public void clickCategoriesForSortingTheProduct(String cat) {
+    public void clickCategoriesForSortingTheProduct(String cat) throws InterruptedException {
         homeP.selectCategories(cat);
     }
 
