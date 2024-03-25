@@ -13,7 +13,7 @@ public class login_registPage {
     By signup_inputPassword = By.xpath("//input[@id='sign-password']");
     By login_inputUsername = By.xpath("//input[@id='loginusername']");
     By login_inputPassword = By.xpath("//input[@id='loginpassword']");
-    By validateLoginNavbar = By.xpath("//li[@class='nav-item']//a[@id='nameofuser']");
+    By validateLoginNavbar = By.xpath("//li[@class='nav-item']//a[@class='nav-link']/parent::li//a[@id='nameofuser']");
 
     By loginButton(String button) {
         return By.xpath("//button[text()='"+button+"']");
