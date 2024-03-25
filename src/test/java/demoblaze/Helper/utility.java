@@ -14,11 +14,11 @@ public class utility {
     public static WebDriver driver;
 
     public static void startDriver() {
-        FirefoxOptions options = new FirefoxOptions();
+        ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        driver = new FirefoxDriver(options);
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
