@@ -1,0 +1,75 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '4.5.1'
+    testImplementation group: 'org.json', name: 'json', version: '20231013'
+    implementation group: 'io.rest-assured', name: 'json-schema-validator', version: '4.5.1'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.11.0'
+    testImplementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.3.0'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.2'
+
+    testImplementation group: 'io.cucumber', name: 'cucumber-java', version: '7.15.0'
+    testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '7.15.0'
+
+    testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.9.1'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.0'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.9.0'
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags")
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+def tags = (findProperty('tags') == null) ? 'not @exclude' : findProperty('tags') + ' and not @exlude'
+
+tasks.register('webTest') {
+    description("Running Cucumber Web Testing")
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = [
+                    '--plugin', 'html:reports/cucumber-webtest-report.html',
+                    '--plugin', 'pretty',
+                    '--glue', 'demoblaze',
+                    '--tags', "@web_testing",
+                    'src/test/resources/webTesting'
+            ]
+        }
+    }
+}
+
+tasks.register('apiTest') {
+    description("Running Cucumber API Testing")
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = [
+                    '--plugin', 'html:reports/cucumber-apitest-report.html',
+                    '--plugin', 'pretty',
+                    '--glue', 'dummyAPI_io',
+                    '--tags', "@api_testing",
+                    'src/test/resources/apiTesting'
+            ]
+        }
+    }
+}
