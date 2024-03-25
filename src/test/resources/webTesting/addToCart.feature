@@ -1,7 +1,7 @@
 Feature: Add product to cart at demoblaze.com
 
   @web_testing
-  Scenario Outline: add all product to cart sort by categories
+  Scenario Outline: add selected product to cart and sort by categories
     Given homepage is displayed
     When click "<categories>" for sorting the product
     And product is sort by categories
