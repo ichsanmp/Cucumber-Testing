@@ -1,4 +1,4 @@
-name: Web Testing Automation
+name: API Testing Automation
 
 on:
   push:
@@ -21,24 +21,20 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # install browser
-      - name: Setup Firefox
-        uses: browser-actions/setup-firefox@v1.5.0
-
       # setup gradlew
       - name: Setup gradlew
         run: chmod +x gradlew
 
-      # execute gradle command for running cucumber web test
-      - name: Execute web test
-        run: ./gradlew webTest
+      # execute gradle command for running cucumber api test
+      - name: Execute api test
+        run: ./gradlew apiTest
 
-      # archive web test result
-      - name: Archive web test result
+      # archive api test result
+      - name: Archive api test result
         uses: actions/upload-artifact@v4.3.1
         if: always()
         with:
-          name: Cucumber Web Test Report
+          name: Cucumber API Test Report
           path: reports
 
       # deploy to github page
